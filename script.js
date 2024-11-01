@@ -3,6 +3,7 @@ GRIDSIZE = 960;
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.container');
     const button = document.querySelector('.gridSize');
+    const rainbowButton = document.querySelector('.rainbow');
     
     button.addEventListener('click', () => {
         let size = prompt("Enter a new grid size: ");
@@ -13,6 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
         grid(size);
     });
 
+    function rainbow() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+
+
     function grid(size = 16) {
         container.innerHTML = '';
         let cellSize = GRIDSIZE / size + 'px';
@@ -21,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const div = document.createElement('div');
                 div.style.flex = `0 0 calc(100% / ${size})`;
                 div.style.height = cellSize;
+                div.style.width = cellSize;
                 container.appendChild(div);
             }
         }
@@ -30,6 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target !== container) {
             event.target.style.backgroundColor = 'green';
         }
+    });
+
+    rainbowButton.addEventListener('click', () => {
+        container.addEventListener('mouseover', (event) => {
+            if (event.target !== container) {
+                event.target.style.backgroundColor = rainbow();
+            }
+        });
     });
 
     grid();
